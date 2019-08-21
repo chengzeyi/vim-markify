@@ -67,7 +67,7 @@ if g:markify_autocmd "{{{1
       autocmd CursorMoved * call s:EchoCurrentMessage()
     endif
 
-    autocmd QuickFixCmdPost * call s:MarkifyClear() | call s:Markify()
+    autocmd QuickFixCmdPost,BufEnter,WinEnter * call s:MarkifyClear() | call s:Markify()
   augroup END
   " }}}2
 end
