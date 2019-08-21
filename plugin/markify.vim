@@ -53,9 +53,9 @@ call s:SetGlobalOptDefault('markify_warning_texthl', 'Todo')
 call s:SetGlobalOptDefault('markify_info_text', '>>')
 call s:SetGlobalOptDefault('markify_info_texthl', 'Normal')
 call s:SetGlobalOptDefault('markify_autocmd', 1)
-call s:SetGlobalOptDefault('markify_map', '<Leader>mm')
-call s:SetGlobalOptDefault('markify_clear_map', '<Leader>mc')
-call s:SetGlobalOptDefault('markify_toggle_map', '<Leader>M')
+" call s:SetGlobalOptDefault('markify_map', '<Leader>mm')
+" call s:SetGlobalOptDefault('markify_clear_map', '<Leader>mc')
+" call s:SetGlobalOptDefault('markify_toggle_map', '<Leader>M')
 call s:SetGlobalOptDefault('markify_echo_current_message', 1)
 " }}}1
 
@@ -184,9 +184,9 @@ command! -nargs=0 Markify call s:Markify()
 command! -nargs=0 MarkifyClear call s:MarkifyClear()
 command! -nargs=0 MarkifyToggle call s:MarkifyToggle()
 
-execute "nnoremap <silent> " . g:markify_map . " :Markify<CR>"
-execute "nnoremap <silent> " . g:markify_clear_map . " :MarkifyClear<CR>"
-execute "nnoremap <silent> " . g:markify_toggle_map . " :MarkifyToggle<CR>"
+" execute "nnoremap <silent> " . g:markify_map . " :Markify<CR>"
+" execute "nnoremap <silent> " . g:markify_clear_map . " :MarkifyClear<CR>"
+" execute "nnoremap <silent> " . g:markify_toggle_map . " :MarkifyToggle<CR>"
 " }}}1
 
 " Avoid side effects {{{1
