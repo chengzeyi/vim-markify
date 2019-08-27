@@ -57,6 +57,7 @@ call s:SetGlobalOptDefault('markify_autocmd', 1)
 " call s:SetGlobalOptDefault('markify_clear_map', '<Leader>mc')
 " call s:SetGlobalOptDefault('markify_toggle_map', '<Leader>M')
 call s:SetGlobalOptDefault('markify_echo_current_message', 1)
+call s:SetGlobalOptDefault('markify_enabled', 1)
 " }}}1
 
 if g:markify_autocmd "{{{1
@@ -67,7 +68,7 @@ if g:markify_autocmd "{{{1
       autocmd CursorMoved * call s:EchoCurrentMessage()
     endif
 
-    autocmd QuickFixCmdPost,BufEnter,WinEnter * call s:MarkifyClear() | call s:Markify()
+    autocmd QuickFixCmdPost,BufEnter,WinEnter * call s:Markify()
   augroup END
   " }}}2
 end
@@ -141,7 +142,8 @@ endfunction
 " function! s:Markify() {{{1
 let [s:markified, s:sign_ids] = [0, {}]
 function! s:Markify()
-  if s:markified | return | endif
+  if s:markified | call s:MarkifyClear()
+  if !g:markify_enabled | return | endif
 
   let [items, loclist, qflist] = [[], getloclist(0), getqflist()]
   if !empty(loclist)
@@ -175,7 +177,8 @@ endfunction
 " }}}1
 
 function! s:MarkifyToggle() "{{{1
-  if s:markified | call s:MarkifyClear() | else | call s:Markify() | endif
+  let g:markify_enabled = !g:markify_enabled
+  call s:Markify()
 endfunction
 " }}}1
 
