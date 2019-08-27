@@ -94,23 +94,37 @@ endfunction
 " }}}1
 
 function! s:PlaceSigns(items) " {{{1
+  let placed = {}
   for item in a:items
     if item.bufnr == 0 || item.lnum == 0 | continue | endif
-    let id = item.bufnr . item.lnum
-    if has_key(s:sign_ids, id) | return | endif
-    let s:sign_ids[id] = item
-
     let sign_name = ''
+    let id = 0
     if item.type ==? 'E'
       let sign_name = 'MarkifyError'
+      let id .= 0
     elseif item.type ==? 'W'
       let sign_name = 'MarkifyWarning'
+      let id .= 1
     else
       let sign_name = 'MarkifyInfo'
+      let id .= 2
     endif
+    let id .= item.bufnr . item.lnum
+    let placed[id] = 1
+    if has_key(s:sign_ids, id)
+      continue
+    endif
+    let s:sign_ids[id] = item
 
     execute 'sign place ' . id . ' line=' . item.lnum . ' name=' . sign_name .
           \ ' buffer=' .  item.bufnr
+  endfor
+
+  for id in keys(s:sign_ids)
+    if !has_key(placed, id)
+      execute 'sign unplace ' . id
+      call remove(s:sign_ids, id)
+    endif
   endfor
 endfunction
 " }}}1
@@ -142,7 +156,6 @@ endfunction
 " function! s:Markify() {{{1
 let [s:markified, s:sign_ids] = [0, {}]
 function! s:Markify()
-  if s:markified | call s:MarkifyClear() | endif
   if !g:markify_enabled | return | endif
 
   let [items, loclist, qflist] = [[], getloclist(0), getqflist()]
@@ -178,7 +191,11 @@ endfunction
 
 function! s:MarkifyToggle() "{{{1
   let g:markify_enabled = !g:markify_enabled
-  call s:Markify()
+  if g:markify_enabled
+    call s:Markify()
+  else
+    call s:MarkifyClear()
+  endif
 endfunction
 " }}}1
 
