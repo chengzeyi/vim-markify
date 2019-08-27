@@ -97,7 +97,7 @@ function! s:PlaceSigns(items) " {{{1
   let placed = {}
   for item in a:items
     if item.bufnr == 0 || item.lnum == 0 | continue | endif
-    let id .= item.bufnr . item.lnum
+    let id = item.bufnr . item.lnum
     let sign_name = ''
     let kind = 0
     if item.type ==? 'E'
