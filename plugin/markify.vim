@@ -115,6 +115,7 @@ function! s:PlaceSigns(items) " {{{1
         execute 'sign unplace' . id
         call remove(s:sign_ids, id)
       else
+        let s:sign_ids[id][1] = item
         continue
       endif
     endif
