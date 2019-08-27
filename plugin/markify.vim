@@ -142,7 +142,7 @@ endfunction
 " function! s:Markify() {{{1
 let [s:markified, s:sign_ids] = [0, {}]
 function! s:Markify()
-  if s:markified | call s:MarkifyClear()
+  if s:markified | call s:MarkifyClear() | endif
   if !g:markify_enabled | return | endif
 
   let [items, loclist, qflist] = [[], getloclist(0), getqflist()]
