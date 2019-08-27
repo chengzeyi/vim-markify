@@ -97,24 +97,28 @@ function! s:PlaceSigns(items) " {{{1
   let placed = {}
   for item in a:items
     if item.bufnr == 0 || item.lnum == 0 | continue | endif
+    let id .= item.bufnr . item.lnum
     let sign_name = ''
-    let id = 0
+    let kind = 0
     if item.type ==? 'E'
       let sign_name = 'MarkifyError'
-      let id .= 0
+      let kind = 1
     elseif item.type ==? 'W'
       let sign_name = 'MarkifyWarning'
-      let id .= 1
+      let kind = 2
     else
       let sign_name = 'MarkifyInfo'
-      let id .= 2
     endif
-    let id .= item.bufnr . item.lnum
     let placed[id] = 1
     if has_key(s:sign_ids, id)
-      continue
+      if s:sign_ids[id][0] != kind
+        execute 'sign unplace' . id
+        call remove(s:sign_ids, id)
+      else
+        continue
+      endif
     endif
-    let s:sign_ids[id] = item
+    let s:sign_ids[id] = [kind, item]
 
     execute 'sign place ' . id . ' line=' . item.lnum . ' name=' . sign_name .
           \ ' buffer=' .  item.bufnr
@@ -149,7 +153,7 @@ endfunction
 function! s:EchoCurrentMessage() "{{{1
   let id = bufnr('%') . line('.')
   if !has_key(s:sign_ids, id) | return | endif
-  call s:EchoMessage(s:sign_ids[id].text)
+  call s:EchoMessage(s:sign_ids[id][1].text)
 endfunction
 " }}}1
 
