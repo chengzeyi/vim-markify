@@ -112,7 +112,7 @@ function! s:PlaceSigns(items) " {{{1
     let placed[id] = 1
     if has_key(s:sign_ids, id)
       if s:sign_ids[id][0] != kind
-        execute 'sign unplace' . id
+        execute 'sign unplace ' . id
         call remove(s:sign_ids, id)
       else
         let s:sign_ids[id][1] = item
