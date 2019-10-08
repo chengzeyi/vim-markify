@@ -135,7 +135,7 @@ endfunction
 " }}}1
 
 " function! s:EchoMessage(message) - Taken from Syntastic {{{1
-function! s:EchoMessage(message)
+function! s:EchoMessage(kind, message)
   let [old_ruler, old_showcmd] = [&ruler, &showcmd]
 
   let message = substitute(a:message, "\t", repeat(' ', &tabstop), 'g')
@@ -145,7 +145,13 @@ function! s:EchoMessage(message)
   set noruler noshowcmd
   redraw
 
-  echo message
+  if a:kind == 1
+    echohl ErrorMsg | echo message | echohl None
+  elseif a:kind == 2
+    echohl WarningMsg | echo message | echohl None
+  else
+    echo message
+  endif
 
   let [&ruler, &showcmd] = [old_ruler, old_showcmd]
 endfunction
@@ -154,7 +160,8 @@ endfunction
 function! s:EchoCurrentMessage() "{{{1
   let id = bufnr('%') . line('.')
   if !has_key(s:sign_ids, id) | return | endif
-  call s:EchoMessage(s:sign_ids[id][1].text)
+  let [kind, item] = s:sign_ids[id]
+  call s:EchoMessage(kind, item.text)
 endfunction
 " }}}1
 
