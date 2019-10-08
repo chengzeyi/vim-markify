@@ -46,11 +46,11 @@ endfunction
 " }}}1
 
 " Set Global Default Options {{{1
-call s:SetGlobalOptDefault('markify_error_text', '>>')
+call s:SetGlobalOptDefault('markify_error_text', '▶')
 call s:SetGlobalOptDefault('markify_error_texthl', 'Error')
-call s:SetGlobalOptDefault('markify_warning_text', '>>')
+call s:SetGlobalOptDefault('markify_warning_text', '▶')
 call s:SetGlobalOptDefault('markify_warning_texthl', 'Todo')
-call s:SetGlobalOptDefault('markify_info_text', '>>')
+call s:SetGlobalOptDefault('markify_info_text', '▶')
 call s:SetGlobalOptDefault('markify_info_texthl', 'Normal')
 call s:SetGlobalOptDefault('markify_autocmd', 1)
 " call s:SetGlobalOptDefault('markify_map', '<Leader>mm')
