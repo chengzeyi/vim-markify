@@ -60,18 +60,15 @@ call s:SetGlobalOptDefault('markify_echo_current_message', 1)
 call s:SetGlobalOptDefault('markify_enabled', 1)
 " }}}1
 
-if g:markify_autocmd "{{{1
-  augroup Markify " {{{2
-    au!
-
-    if g:markify_echo_current_message
-      autocmd CursorMoved * call s:EchoCurrentMessage()
-    endif
-
+augroup Markify " {{{1
+  au!
+  if g:markify_echo_current_message
+    autocmd CursorMoved * call s:EchoCurrentMessage()
+  endif
+  if g:markify_autocmd
     autocmd QuickFixCmdPost,BufEnter,WinEnter * call s:Markify()
-  augroup END
-  " }}}2
-end
+  end
+augroup END
 " }}}1
 
 " Define Signs {{{1
