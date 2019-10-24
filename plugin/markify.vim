@@ -177,14 +177,14 @@ function! s:Markify()
   endif
 
   if has('balloon_eval')
-    let old_balloonexpr = &balloonexpr
+    let old_balloonexpr = &l:balloonexpr
     setl ballooneval balloonexpr=MarkifyBalloonExpr()
   endif
 
   call s:PlaceSigns(items)
 
   if has('balloon_eval') && exists(old_balloonexpr)
-    let &balloonexpr = old_balloonexpr
+    let &l:balloonexpr = old_balloonexpr
   endif
 endfunction
 " }}}1
