@@ -163,7 +163,7 @@ endfunction
 " }}}1
 
 " function! s:Markify() {{{1
-let [s:markified, s:sign_ids] = [0, {}]
+let s:sign_ids = {}
 function! s:Markify()
   if !g:markify_enabled | return | endif
 
@@ -172,6 +172,8 @@ function! s:Markify()
     let items = loclist
   elseif !empty(qflist)
     let items = qflist
+  else
+    return
   endif
 
   if has('balloon_eval')
@@ -184,8 +186,6 @@ function! s:Markify()
   if has('balloon_eval') && exists(old_balloonexpr)
     let &balloonexpr = old_balloonexpr
   endif
-
-  let s:markified = 1
 endfunction
 " }}}1
 
@@ -194,7 +194,6 @@ function! s:MarkifyClear() " {{{1
     exec 'sign unplace ' . sign_id
     call remove(s:sign_ids, sign_id)
   endfor
-  let s:markified = 0
 endfunction
 " }}}1
 
