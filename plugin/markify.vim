@@ -81,6 +81,15 @@ execute 'sign define MarkifyInfo text=' . g:markify_info_text .
       \ ' texthl=' . g:markify_info_texthl
 " }}}1
 
+if g:markify_balloon
+  if has('balloon_eval')
+    set ballooneval
+  endif
+  if has('balloon_eval_term')
+    set balloonevalterm
+  endif
+endif
+
 function! MarkifyBalloonExpr() " {{{1
   for item in getqflist()
     if item.bufnr ==# v:beval_bufnr && item.lnum ==# v:beval_lnum
@@ -179,14 +188,12 @@ function! s:Markify()
   endif
 
   if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term'))
-    let b:old_balloonexpr = &l:balloonexpr
+    if !empty(&l:balloonexpr)
+      let b:old_balloonexpr = &l:balloonexpr
+    else
+      let b:old_balloonexpr = ''
+    endif
     setl balloonexpr=MarkifyBalloonExpr()
-    if has('balloon_eval')
-      set ballooneval
-    endif
-    if has('balloon_eval_term')
-      set balloonevalterm
-    endif
   endif
 
   call s:PlaceSigns(items)
