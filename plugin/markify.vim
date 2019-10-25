@@ -194,7 +194,7 @@ endfunction
 " }}}1
 
 function! s:MarkifyClear() " {{{1
-  if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term')) && exists(b:old_balloonexpr)
+  if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term')) && exists('b:old_balloonexpr')
     if &l:balloonexpr ==# 'MarkifyBalloonExpr()'
       let &l:balloonexpr = b:old_balloonexpr
     endif
