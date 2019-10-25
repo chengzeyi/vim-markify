@@ -188,10 +188,8 @@ function! s:Markify()
   endif
 
   if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term'))
-    if !empty(&l:balloonexpr)
+    if !exists('b:old_balloonexpr')
       let b:old_balloonexpr = &l:balloonexpr
-    else
-      let b:old_balloonexpr = ''
     endif
     setl balloonexpr=MarkifyBalloonExpr()
   endif
