@@ -178,11 +178,12 @@ function! s:Markify()
   endif
 
   if has('balloon_eval') || has('balloon_eval_term')
+    let b:old_balloonexpr = &l:balloonexpr
     setl balloonexpr=MarkifyBalloonExpr()
-    if has("balloon_eval")
+    if has('balloon_eval')
       set ballooneval
     endif
-    if has("balloon_eval_term")
+    if has('balloon_eval_term')
       set balloonevalterm
     endif
   endif
@@ -192,6 +193,12 @@ endfunction
 " }}}1
 
 function! s:MarkifyClear() " {{{1
+  if (has('balloon_eval') || has('balloon_eval_term')) && exists(b:old_balloonexpr)
+    if &l:balloonexpr ==# 'MarkifyBalloonExpr()'
+      let &l:balloonexpr = b:old_balloonexpr
+    endif
+    unlet b:old_balloonexpr
+  endif
   for sign_id in keys(s:sign_ids)
     exec 'sign unplace ' . sign_id
     call remove(s:sign_ids, sign_id)
