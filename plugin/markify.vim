@@ -56,6 +56,7 @@ call s:SetGlobalOptDefault('markify_autocmd', 1)
 " call s:SetGlobalOptDefault('markify_map', '<Leader>mm')
 " call s:SetGlobalOptDefault('markify_clear_map', '<Leader>mc')
 " call s:SetGlobalOptDefault('markify_toggle_map', '<Leader>M')
+call s:SetGlobalOptDefault('markify_balloon', 1)
 call s:SetGlobalOptDefault('markify_echo_current_message', 1)
 call s:SetGlobalOptDefault('markify_enabled', 1)
 " }}}1
@@ -177,7 +178,7 @@ function! s:Markify()
     return
   endif
 
-  if has('balloon_eval') || has('balloon_eval_term')
+  if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term'))
     let b:old_balloonexpr = &l:balloonexpr
     setl balloonexpr=MarkifyBalloonExpr()
     if has('balloon_eval')
@@ -193,7 +194,7 @@ endfunction
 " }}}1
 
 function! s:MarkifyClear() " {{{1
-  if (has('balloon_eval') || has('balloon_eval_term')) && exists(b:old_balloonexpr)
+  if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term')) && exists(b:old_balloonexpr)
     if &l:balloonexpr ==# 'MarkifyBalloonExpr()'
       let &l:balloonexpr = b:old_balloonexpr
     endif
