@@ -173,6 +173,7 @@ function! s:Markify()
   elseif !empty(qflist)
     let items = qflist
   else
+    call s:MarkifyClear()
     return
   endif
 
