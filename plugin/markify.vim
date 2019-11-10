@@ -47,11 +47,11 @@ endfunction
 
 " Set Global Default Options {{{1
 call s:SetGlobalOptDefault('markify_error_text', 'E▶')
-call s:SetGlobalOptDefault('markify_error_texthl', 'DiffDelete')
+call s:SetGlobalOptDefault('markify_error_texthl', 'ErrorMsg')
 call s:SetGlobalOptDefault('markify_warning_text', 'W▶')
-call s:SetGlobalOptDefault('markify_warning_texthl', 'DiffChange')
+call s:SetGlobalOptDefault('markify_warning_texthl', 'WarningMsg')
 call s:SetGlobalOptDefault('markify_info_text', 'I▶')
-call s:SetGlobalOptDefault('markify_info_texthl', 'DiffAdd')
+call s:SetGlobalOptDefault('markify_info_texthl', 'MoreMsg')
 call s:SetGlobalOptDefault('markify_autocmd', 1)
 " call s:SetGlobalOptDefault('markify_map', '<Leader>mm')
 " call s:SetGlobalOptDefault('markify_clear_map', '<Leader>mc')
