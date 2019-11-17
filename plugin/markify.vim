@@ -56,7 +56,7 @@ call s:SetGlobalOptDefault('markify_autocmd', 1)
 " call s:SetGlobalOptDefault('markify_map', '<Leader>mm')
 " call s:SetGlobalOptDefault('markify_clear_map', '<Leader>mc')
 " call s:SetGlobalOptDefault('markify_toggle_map', '<Leader>M')
-call s:SetGlobalOptDefault('markify_balloon', 1)
+" call s:SetGlobalOptDefault('markify_balloon', 1)
 call s:SetGlobalOptDefault('markify_echo_current_message', 1)
 call s:SetGlobalOptDefault('markify_enabled', 1)
 " }}}1
@@ -81,23 +81,23 @@ execute 'sign define MarkifyInfo text=' . g:markify_info_text .
       \ ' texthl=' . g:markify_info_texthl
 " }}}1
 
-if g:markify_balloon
-  if has('balloon_eval')
-    set ballooneval
-  endif
-  if has('balloon_eval_term')
-    set balloonevalterm
-  endif
-endif
+" if g:markify_balloon
+"   if has('balloon_eval')
+"     set ballooneval
+"   endif
+"   if has('balloon_eval_term')
+"     set balloonevalterm
+"   endif
+" endif
 
-function! MarkifyBalloonExpr() " {{{1
-  for item in getqflist()
-    if item.bufnr ==# v:beval_bufnr && item.lnum ==# v:beval_lnum
-      return item.text
-    endif
-  endfor
-  return ''
-endfunction
+" function! MarkifyBalloonExpr() " {{{1
+"   for item in getqflist()
+"     if item.bufnr ==# v:beval_bufnr && item.lnum ==# v:beval_lnum
+"       return item.text
+"     endif
+"   endfor
+"   return ''
+" endfunction
 " }}}1
 
 function! s:PlaceSigns(items) " {{{1
@@ -187,24 +187,24 @@ function! s:Markify()
     return
   endif
 
-  if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term'))
-    if !exists('b:old_balloonexpr')
-      let b:old_balloonexpr = &l:balloonexpr
-    endif
-    setl balloonexpr=MarkifyBalloonExpr()
-  endif
+  " if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term'))
+  "   if !exists('b:old_balloonexpr')
+  "     let b:old_balloonexpr = &l:balloonexpr
+  "   endif
+  "   setl balloonexpr=MarkifyBalloonExpr()
+  " endif
 
   call s:PlaceSigns(items)
 endfunction
 " }}}1
 
 function! s:MarkifyClear() " {{{1
-  if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term')) && exists('b:old_balloonexpr')
-    if &l:balloonexpr ==# 'MarkifyBalloonExpr()'
-      let &l:balloonexpr = b:old_balloonexpr
-    endif
-    unlet b:old_balloonexpr
-  endif
+  " if g:markify_balloon && (has('balloon_eval') || has('balloon_eval_term')) && exists('b:old_balloonexpr')
+  "   if &l:balloonexpr ==# 'MarkifyBalloonExpr()'
+  "     let &l:balloonexpr = b:old_balloonexpr
+  "   endif
+  "   unlet b:old_balloonexpr
+  " endif
   for sign_id in keys(s:sign_ids)
     exec 'sign unplace ' . sign_id
     call remove(s:sign_ids, sign_id)
